@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perpustakaan Desa Tlambah - Jendela Desa</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+        }
+
+        .logo h1 {
+            font-size: 1.8rem;
+            color: #2c5282;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: #2c5282;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background: #2c5282;
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a.active {
+            color: #2c5282;
+        }
+
+        .nav-links a.active::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            background-image: url(IMG20250320165846-2048x1536.jpg) ;
+            background-size: cover;       /* Menyesuaikan ukuran agar menutup seluruh area */
+            background-position: center;  /* Fokus tetap di tengah gambar */
+            background-repeat: no-repeat; /* Jangan ulang gambar */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5); /* warna hitam transparan */
+            z-index: 1;
+        }
+
+        .hero-content {
+            z-index: 2;
+            max-width: 800px;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 15px 30px;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            border: 2px solid rgba(255,255,255,0.3);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .cta-button:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        /* Main Content */
+        .main-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .section {
+            margin: 4rem 0;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section h2 {
+            font-size: 2.5rem;
+            color: #2c5282;
+            margin-bottom: 2rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .section h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(to right, #667eea, #764ba2);
+            border-radius: 2px;
+        }
+
+        /* Image Gallery */
+        .image-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .gallery-item {
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0,0,0,0.8));
+            color: white;
+            padding: 2rem;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            transform: translateY(0);
+        }
+
+        /* News Section */
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .news-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border-left: 5px solid #667eea;
+        }
+
+        .news-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .news-card h3 {
+            color: #2c5282;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .news-card p {
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        .news-link {
+            display: inline-block;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .news-link:hover {
+            color: #764ba2;
+        }
+
+        /* Awards Section */
+        .awards-container {
+            text-align: center;
+            padding: 3rem 0;
+        }
+
+        .award-item {
+            background: linear-gradient(135deg, #66eae8, #764ba2);
+            color: white;
+            padding: 3rem;
+            border-radius: 20px;
+            margin: 2rem 0;
+            box-shadow: 0 15px 35px rgba(102, 126, 234, 0.3);
+            animation: pulse 2s infinite;
+        }
+
+        .award-item h3 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .award-item p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        /* Structure Section */
+        .structure-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .structure-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .structure-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .structure-card h4 {
+            color: #2c5282;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        /* Footer */
+        footer {
+            background: #2c5282;
+            color: white;
+            text-align: center;
+            padding: 3rem 2rem;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            opacity: 0.8;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .floating {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .section h2 {
+                font-size: 2rem;
+            }
+        }
+
+        /* Hide sections initially */
+        #home { display: block; }
+        #berita, #penghargaan, #struktur, #buku { display: none; }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <div class="logo">
+                <img src="WhatsApp Image 2025-04-24 at 08.31.14 (1).jpeg">
+                <h1>Jendela Desa</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#" onclick="showSection('home')" class="active">Home</a></li>
+                <li><a href="#" onclick="showSection('berita')">Berita</a></li>
+                <li><a href="#" onclick="showSection('penghargaan')">Penghargaan</a></li>
+                <li><a href="#" onclick="showSection('struktur')">Struktur</a></li>
+                <li><a href="#" onclick="showSection('buku')">Buku</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Home Section -->
+    <div id="home">
+        <section class="hero">
+            <div class="hero-content">
+                <h1 class="floating">Perpustakaan Desa Tlambah</h1>
+                <p>Jendela Pemerintah Menuju Cita-cita Bangsa</p>
+                <a href="#" class="cta-button" onclick="showSection('berita')">Jelajahi</a>
+            </div>
+        </section>
+
+        <div class="main-content">
+            <section class="section">
+                <h2>Galeri Kegiatan</h2>
+                <div class="image-gallery">
+                    <div class="gallery-item">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 250'%3E%3Crect width='400' height='250' fill='%23f8fafc'/%3E%3Crect x='50' y='50' width='300' height='150' fill='%236b7280' rx='10'/%3E%3Ctext x='200' y='135' text-anchor='middle' fill='white' font-size='16' font-family='Arial'%3EPenghargaan Juara%3C/text%3E%3C/svg%3E" alt="Penghargaan">
+                        <div class="gallery-overlay">
+                            <h3>Penghargaan Juara</h3>
+                            <p>Perpustakaan Desa Tlambah meraih penghargaan sebagai perpustakaan desa terbaik tingkat kabupaten</p>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 250'%3E%3Crect width='400' height='250' fill='%23f1f5f9'/%3E%3Crect x='30' y='30' width='340' height='190' fill='%234f46e5' rx='15'/%3E%3Ctext x='200' y='110' text-anchor='middle' fill='white' font-size='14' font-family='Arial'%3EKegiatan Perpustakaan%3C/text%3E%3Ctext x='200' y='140' text-anchor='middle' fill='white' font-size='14' font-family='Arial'%3EDesa Tlambah%3C/text%3E%3C/svg%3E" alt="Kegiatan">
+                        <div class="gallery-overlay">
+                            <h3>Kegiatan Rutin</h3>
+                            <p>Berbagai kegiatan literasi dan pembelajaran untuk meningkatkan minat baca masyarakat</p>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 250'%3E%3Crect width='400' height='250' fill='%23fef7cd'/%3E%3Crect x='40' y='40' width='320' height='170' fill='%23059669' rx='12'/%3E%3Ctext x='200' y='115' text-anchor='middle' fill='white' font-size='14' font-family='Arial'%3EFasilitas Modern%3C/text%3E%3Ctext x='200' y='145' text-anchor='middle' fill='white' font-size='14' font-family='Arial'%3EPerpustakaan Desa%3C/text%3E%3C/svg%3E" alt="Fasilitas">
+                        <div class="gallery-overlay">
+                            <h3>Fasilitas Modern</h3>
+                            <p>Dilengkapi dengan fasilitas modern untuk mendukung kegiatan literasi masyarakat</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2>Tentang Kami</h2>
+                <div style="text-align: center; padding: 2rem;">
+                    <p style="font-size: 1.2rem; color: #666; max-width: 800px; margin: 0 auto; line-height: 1.8;">
+                        Perpustakaan Desa Tlambah berdedikasi untuk menjadi jendela pengetahuan bagi masyarakat desa. 
+                        Dengan komitmen tinggi dalam meningkatkan literasi dan pendidikan, kami terus berinovasi 
+                        untuk memberikan pelayanan terbaik kepada masyarakat.
+                    </p>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- Berita Section -->
+    <div id="berita">
+        <div class="main-content" style="margin-top: 100px;">
+            <section class="section visible">
+                <h2>Berita Terkini</h2>
+                <div class="news-grid">
+                    <div class="news-card">
+                        <h3>Perpustakaan Desa, Jendela Pemerintah Menuju Cita-cita Bangsa</h3>
+                        <p>Perpustakaan desa memiliki peran strategis sebagai pusat informasi dan edukasi bagi masyarakat dalam mendukung program pemerintah dan pembangunan desa.</p>
+                        <a href="https://faamnews.com/perpustakaan-desa-jendela-pemerintah-menuju-cita-cita-bangsa/" class="news-link" target="_blank">Baca Selengkapnya →</a>
+                    </div>
+                    <div class="news-card">
+                        <h3>Berhasil Tingkatkan Minat Baca, Perpustakaan Desa Tlambah Raih Juara Tingkat Kabupaten</h3>
+                        <p>Dengan berbagai program inovatif dan pelayanan prima, Perpustakaan Desa Tlambah berhasil meraih penghargaan sebagai perpustakaan desa terbaik di tingkat kabupaten.</p>
+                        <a href="https://faamnews.com/berhasil-tingkatkan-minat-baca-perpustakaan-desa-tlambah-raih-juara-tingkat-kabupaten/" class="news-link" target="_blank">Baca Selengkapnya →</a>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- Penghargaan Section -->
+    <div id="penghargaan">
+        <div class="main-content" style="margin-top: 100px;">
+            <section class="section visible">
+                <h2>Penghargaan</h2>
+                <div class="awards-container">
+                    <div class="award-item">
+                        <img src="c:\Users\ACER\Downloads\WhatsApp Image 2025-04-24 at 08.25.23.jpeg" style="width: 100%; height: auto;">
+                        <h3>Lomba Perpustakaan Desa Terbaik</h3>
+                        <p>Kabupaten Sampang - Tahun 2025</p>
+                    </div>
+                    <div class="award-item">
+                        <img src="c:\Users\ACER\Downloads\WhatsApp Image 2025-04-24 at 08.23.36.jpeg" style="width: 100%; height: auto;">
+                        <h3>🎖️ Juara 2 Perpustakaan Desa Terbaik</h3>
+                        <p>Tingkat Se-Kabupaten Sampang - Tahun 2025</p>
+                    </div>
+                    <div class="award-item">
+                        <img src="d:\KEBUTUHAN KULIAH\desa\IMG_20250324_213058.jpg" style="width: 100%; height: auto;">
+                        <h3>Berhasil Tingkatkan Minat Baca</h3>
+                        <p>Perpustakaan Desa Tlambah Raih Juara Tingkat Kabupaten</p>
+                    </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- Struktur Section -->
+    <div id="struktur">
+        <div class="main-content" style="margin-top: 100px;">
+            <section class="section visible">
+                <h2>Struktur Organisasi</h2>
+                <div class="structure-grid">
+                       <div class="structure-card">
+                        <h4>Penanggung Jawab</h4>
+                        <h3>CHOLIL,M.AP</h3>
+                        <p>Memimpin dan mengelola seluruh kegiatan perpustakaan desa</p>
+                    </div>
+                    <div class="structure-card">
+                        <h4>Kepala Perpustakaan</h4>
+                        <h3>ACHMAD VICKY FAISAL,S.kom</h3>
+                        <p>Memimpin dan mengelola seluruh kegiatan perpustakaan desa</p>
+                    </div>
+                 
+                    <div class="structure-card">
+                        <h4>Wakil Ketua</h4>
+                        <h3>ABD.KHOLIK ALIMULLAH,S.Pd</h3>
+                        <p>Memimpin dan mengelola seluruh kegiatan perpustakaan desa</p>
+                    </div>
+                    <div class="structure-card">
+                        <h4>Sekretaris</h4>
+                        <h3>MUHAMMAD JUHRI,M.Pd</h3>
+                        <p>Mengurus administrasi dan dokumentasi kegiatan</p>
+                    </div>
+                    <div class="structure-card">
+                        <h4>Bendahara</h4>
+                        <h3>ABD.HAMID,M.Pd</h3>
+                        <p>Mengelola keuangan dan aset perpustakaan</p>
+                    </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- Struktur Section -->
+    <div id="buku">
+        <div class="main-content" style="margin-top: 100px;">
+            <section class="section visible">
+                <h2>Buku Digital</h2>
+                <div class="structure-grid">
+                    <div class="structure-card">
+                        <h4>Psikologi Kepribadian</h4>
+                        <img src="c:\Users\ACER\OneDrive\Pictures\Screenshots\Screenshot 2025-05-28 013719.png" width="100" height="200">
+                         <a href="https://www.google.co.id/books/edition/Psikologi_Kepribadian/Ei-6DwAAQBAJ?hl=id&gbpv=1&dq=buku%20psychology&pg=PA13&printsec=frontcover" class="news-link" target="_blank">Baca Buku Disini →</a>  
+                    </div>
+                    <div class="structure-card">
+                        <h4>Kamus 3 Bahasa Arab Inggris Indonesia</h4>
+                        <img src="d:\KEBUTUHAN KULIAH\desa\Screenshot 2025-05-28 015357.png" width="100" height="200">
+                         <a href="https://www.google.co.id/books/edition/Kamus_3_Bahasa_Arab_Inggris_Indonesia/Ls42EAAAQBAJ?hl=id&gbpv=1&dq=kamus%20bahasa%20inggris&pg=PA26&printsec=frontcover" class="news-link" target="_blank">Baca Buku Disini →</a>  
+                    </div>
+                    <div class="structure-card">
+                         <h4>PENGEMBANGAN NILAI MORAL DAN AGAMA ANAK</h4>
+                        <img src="d:\KEBUTUHAN KULIAH\desa\Screenshot 2025-05-28 020414.png" width="100" height="200">
+                         <a href="https://www.google.co.id/books/edition/PENGEMBANGAN_NILAI_MORAL_DAN_AGAMA_ANAK/vRoMEAAAQBAJ?hl=id&gbpv=1&dq=panduan%20paud&pg=PA13&printsec=frontcover" class="news-link" target="_blank">Baca Buku Disini →</a>  
+                    </div>
+                    <div class="structure-card">
+                        <h4>Kamus Bergambar Bnggris Indonesia</h4>
+                        <img src="d:\KEBUTUHAN KULIAH\desa\Screenshot 2025-05-28 022621.png" width="100" height="200">
+                         <a href="https://www.google.co.id/books/edition/Kamus_Bergambar_Inggris_Indonesia/B5tSEAAAQBAJ?hl=id&gbpv=1&dq=bahasa%20inggris%20ke%20indonesia&pg=PA6&printsec=frontcover" class="news-link" target="_blank">Baca Buku Disini →</a>  
+                    </div>
+                    <div class="structure-card">
+                        <h4>Buku BUKU AJAR PUBLIC SPEAKING</h4>
+                        <img src="d:\KEBUTUHAN KULIAH\desa\content.jpeg" width="100" height="200">
+                         <a href="https://www.google.co.id/books/edition/BUKU_AJAR_PUBLIC_SPEAKING/Y-JwEAAAQBAJ?hl=id&gbpv=1&pg=PA3&printsec=frontcover" class="news-link" target="_blank">Baca Buku Disini →</a>  
+                    </div>
+                    <div class="structure-card">
+                         <h4>Buku Pintar Bahasa Indonesia SD</h4>
+                        <img src="d:\KEBUTUHAN KULIAH\desa\content (1).jpeg" width="100" height="200">
+                         <a href="https://www.google.co.id/books/edition/Buku_Pintar_Bahasa_Indonesia_SD_untuk_Ke/R0Fl8MXyCWUC?hl=id&gbpv=1&dq=buku&pg=PP1&printsec=frontcover" class="news-link" target="_blank">Baca Buku Disini →</a>  
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="#" onclick="showSection('home')">Home</a>
+                <a href="#" onclick="showSection('berita')">Berita</a>
+                <a href="#" onclick="showSection('penghargaan')">Penghargaan</a>
+                <a href="#" onclick="showSection('struktur')">Struktur</a>
+                <a href="#" onclick="showSection('struktur')">Buku</a>
+            </div>
+            <p>&copy; 2025 Perpustakaan Desa Tlambah. Semua hak dilindungi.</p>
+            <p>Jendela Pemerintah Menuju Cita-cita Bangsa</p>
+        </div>
+    </footer>
+
+    <script>
+        // Navigation functionality
+        function showSection(sectionName) {
+            // Hide all sections
+            const sections = ['home', 'berita', 'penghargaan', 'struktur', 'buku'];
+            sections.forEach(section => {
+                document.getElementById(section).style.display = 'none';
+            });
+            
+            // Show selected section
+            document.getElementById(sectionName).style.display = 'block';
+            
+            // Update active nav link
+            const navLinks = document.querySelectorAll('.nav-links a');
+            navLinks.forEach(link => link.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all sections
+        document.addEventListener('DOMContentLoaded', () => {
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+        });
+
+        // Parallax effect for hero section
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const hero = document.querySelector('.hero');
+            if (hero) {
+                hero.style.transform = `translateY(${scrolled * 0.5}px)`;
+            }
+        });
+
+        // Add loading animation
+        window.addEventListener('load', () => {
+            document.body.style.opacity = '0';
+            setTimeout(() => {
+                document.body.style.transition = 'opacity 0.5s ease';
+                document.body.style.opacity = '1';
+            }, 100);
+        });
+    </script>
+</body>
+</html>
