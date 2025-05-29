@@ -105,20 +105,20 @@
         }
 
         /* Hero Section */
-  .hero {
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    position: relative;
-}
-.hero-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-}
+         .hero {
+            height: 100vh;
+            background-image: url(IMG20250320165846-2048x1536.jpg) ;
+            background-size: cover;       /* Menyesuaikan ukuran agar menutup seluruh area */
+            background-position: center;  /* Fokus tetap di tengah gambar */
+            background-repeat: no-repeat; /* Jangan ulang gambar */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        } 
 
         .hero::before {
             content: '';
@@ -482,9 +482,6 @@
 
     <!-- Home Section -->
     <div id="home">
-        <div class="hero">
-    <img src="IMG20250320165846-2048x1536.jpg" class="hero-img" />
-</div>
         <section class="hero">
             <div class="hero-content">
                 <h1 class="floating">Perpustakaan Desa Tlambah</h1>
