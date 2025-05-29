@@ -428,6 +428,34 @@
                 font-size: 2rem;
             }
         }
+        .hamburger {
+    display: none;
+    font-size: 2rem;
+    cursor: pointer;
+}
+
+@media (max-width: 768px) {
+    .hamburger {
+        display: block;
+    }
+
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        background: white;
+        position: absolute;
+        top: 70px;
+        right: 20px;
+        padding: 1rem;
+        box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+        border-radius: 10px;
+        z-index: 999;
+    }
+
+    .nav-links.show {
+        display: flex;
+    }
+}
 
         /* Hide sections initially */
         #home { display: block; }
@@ -441,6 +469,7 @@
                 <img src="WhatsApp Image 2025-04-24 at 08.31.14 (1).jpeg">
                 <h1>Jendela Desa</h1>
             </div>
+            <div class="hamburger" onclick="toggleMenu()">☰</div>
             <ul class="nav-links">
                 <li><a href="#" onclick="showSection('home')" class="active">Home</a></li>
                 <li><a href="#" onclick="showSection('berita')">Berita</a></li>
@@ -701,6 +730,10 @@
                 document.body.style.opacity = '1';
             }, 100);
         });
+        // Toggle menu hamburger
+function toggleMenu() {
+    document.querySelector('.nav-links').classList.toggle('show');
+}
     </script>
 </body>
 </html>
