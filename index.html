@@ -121,9 +121,12 @@
         font-size: 13px;
     }
 
-    .slide img {
-        max-height: 280px;
-    }
+ .slide img {
+    width: 100%;
+    max-height: 600px;  /* Lebih tinggi dari sebelumnya */
+    object-fit: cover;
+    display: block;
+}
 
     .nav-btn {
         width: 30px;
@@ -139,6 +142,12 @@
   }
 }
 
+/* Responsive untuk tablet dan HP */
+@media (max-width: 768px) {
+    .slide img {
+        max-height: 300px;  /* Lebih pendek di layar kecil */
+    }
+}
         * {
             margin: 0;
             padding: 0;
@@ -626,15 +635,15 @@ body {
         <div class="slide active">
             <img src="WhatsApp Image 2025-04-24 at 08.23.36.jpeg" alt="Slide 1">
             <div class="slide-content">
-                <div class="slide-title">Fasilitas Perpustakaan Tlambah</div>
-                <div class="slide-description">Fasilitas Modern Perpustakaan Tlambah</div>
+                <div class="slide-title">🎖️ Juara 2 Perpustakaan Desa Terbaik</div>
+                <div class="slide-description">Tingkat Se-Kabupaten Sampang - Tahun 2025</div>
             </div>
         </div>
         <div class="slide active">
             <img src="IMG20250320165846-2048x1536.jpg" alt="Slide 1">
             <div class="slide-content">
-                <div class="slide-title">🎖️ Juara 2 Perpustakaan Desa Terbaik</div>
-                <div class="slide-description">Tingkat Se-Kabupaten Sampang - Tahun 2025</div>
+              <div class="slide-title">Fasilitas Perpustakaan Tlambah</div>
+                <div class="slide-description">Fasilitas Modern Perpustakaan Tlambah</div>
             </div>
         </div>
 
@@ -671,31 +680,31 @@ body {
 
         <div class="main-content">
             <section class="section">
-                <h2>Galeri Kegiatan</h2>
+                <h2 data-aos="fade-up"  data-aos-duration="1000">Galeri Kegiatan</h2>
                 <div class="image-gallery">
                     <div class="gallery-item">
-                        <img src="WhatsApp Image 2025-04-24 at 08.23.36.jpeg " alt="Penghargaan">
+                        <img data-aos="fade-up"  data-aos-duration="1000" src="WhatsApp Image 2025-04-24 at 08.23.36.jpeg " alt="Penghargaan">
                         <div class="gallery-overlay">
-                            <h3>Penghargaan Juara</h3>
-                            <p>Perpustakaan Desa Tlambah meraih penghargaan sebagai perpustakaan desa terbaik tingkat kabupaten</p>
+                            <h3 data-aos="fade-right" data-aos-duration="1000">Penghargaan Juara</h3>
+                            <p data-aos="fade-left" data-aos-duration="1000">Perpustakaan Desa Tlambah meraih penghargaan sebagai perpustakaan desa terbaik tingkat kabupaten</p>
                         </div>
                     </div>
                     <div class="gallery-item">
-                        <video width="100%" height="auto" controls>
+                        <video data-aos="fade-up"  data-aos-duration="1000"  width="100%" height="auto" controls>
                         <source src="desa (1).mp4" type="video/mp4">
                         Browser Anda tidak mendukung pemutar video.
                         </video>
 
                         <div class="gallery-overlay">
-                            <h3>Kegiatan Rutin</h3>
-                            <p>Berbagai kegiatan literasi dan pembelajaran untuk meningkatkan minat baca masyarakat</p>
+                            <h3 data-aos="fade-right" data-aos-duration="1000">Kegiatan Rutin</h3>
+                            <p data-aos="fade-left" data-aos-duration="1000">Berbagai kegiatan literasi dan pembelajaran untuk meningkatkan minat baca masyarakat</p>
                         </div>
                     </div>
                     <div class="gallery-item">
-                        <img src="IMG20250320165846-2048x1536.jpg" alt="modern">
+                        <img data-aos="fade-up"  data-aos-duration="1000" src="IMG20250320165846-2048x1536.jpg" alt="modern">
                         <div class="gallery-overlay">
-                            <h3>Fasilitas Modern</h3>
-                            <p>Dilengkapi dengan fasilitas modern untuk mendukung kegiatan literasi masyarakat</p>
+                            <h3 data-aos="fade-right" data-aos-duration="1000">Fasilitas Modern</h3>
+                            <p data-aos="fade-left" data-aos-duration="1000">Dilengkapi dengan fasilitas modern untuk mendukung kegiatan literasi masyarakat</p>
                         </div>
                     </div>
                 </div>
